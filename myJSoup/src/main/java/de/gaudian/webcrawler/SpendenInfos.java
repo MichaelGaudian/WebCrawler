@@ -39,95 +39,95 @@ class SpendenInfos{
 		return source;
 	}
 	public void setSource(String source) {
-		this.source = source;
+		this.source = source.trim();
 		System.out.println("Source: " + this.source);
 	}
 	public String getIban() {
 		return iban;
 	}
 	public void setIban(String iban) {
-		this.iban = iban;
+		this.iban = iban.trim();
 		System.out.println("IBAN: " + this.iban);
 	}
 	public String getBic() {
 		return bic;
 	}
 	public void setBic(String bic) {
-		this.bic = bic;
+		this.bic = bic.trim();
 		System.out.println("BIC: " + this.bic);
 	}
 	public String getCompany_name() {
 		return company_name;
 	}
 	public void setCompany_name(String company_name) {
-		this.company_name = company_name;
+		this.company_name = company_name.trim();
 		System.out.println("Company Name: " + this.company_name);
 	}
 	public String getStreet() {
 		return street;
 	}
 	public void setStreet(String street) {
-		this.street = street;
+		this.street = street.trim();
 		System.out.println("Street: " + this.street);
 	}
 	public String getZip_code() {
 		return zip_code;
 	}
 	public void setZip_code(String zip_code) {
-		this.zip_code = zip_code;
+		this.zip_code = zip_code.trim();
 		System.out.println("Zip: " + this.zip_code);
 	}
 	public String getCity() {
 		return city;
 	}
 	public void setCity(String city) {
-		this.city = city;
+		this.city = city.trim();
 		System.out.println("City: " + this.city);
 	}
 	public String getHomepage() {
 		return homepage;
 	}
 	public void setHomepage(String homepage) {
-		this.homepage = homepage;
+		this.homepage = homepage.trim();
 		System.out.println("homepage: " + this.homepage);
 	}
 	public String getTelephone() {
 		return telephone;
 	}
 	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+		this.telephone = telephone.trim();
 		System.out.println("Telephone: " + this.telephone);
 	}
 	public String getFax() {
 		return fax;
 	}
 	public void setFax(String fax) {
-		this.fax = fax;
+		this.fax = fax.trim();
 		System.out.println("Fax: " + this.fax);
 	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email.trim();
 		System.out.println("Email: " + this.email);
 	}
 	public String getLegal_form() {
 		return legal_form;
 	}
 	public void setLegal_form(String legal_form) {
-		this.legal_form = legal_form;
+		this.legal_form = legal_form.trim();
 		System.out.println("Legal Form: " + this.legal_form);
 	}
 	public String getCategory() {
 		return category;
 	}
 	public void setCategory(String category) {
-		this.category = category;
+		this.category = category.trim();
 		System.out.println("Category: " + this.category);
 	}	
 	
-	public void setFields(String text) {
+	public void setDziFields(String text) {
 		if(text.contains("Website")) {
 			setHomepage(text.substring(8, text.length()));
 		}
@@ -162,7 +162,7 @@ class SpendenInfos{
 		    }
 		    
 		    // City
-		    r = Pattern.compile("[0-9]{5} [A-Za-z÷ƒ‹ˆ‰¸ﬂ ]+");
+		    r = Pattern.compile("[0-9]{5} [A-Za-z÷ƒ‹ˆ‰¸ﬂ -]+");
 		    m = r.matcher(text);
 		    
 		    if (m.find()) {
@@ -208,6 +208,60 @@ class SpendenInfos{
 		}
 		if(text.contains("Steuerstatus")) {
 			setCategory(text.substring(13, text.length()));
+		}
+	}
+	
+	public void setVereinslisteFields(String text) {
+		
+		if(text.length() > 80) {
+			return;
+		}
+		
+		if(text.contains("Homepage")) {
+			setHomepage(text.substring(9, text.length()));
+		}
+		if(text.contains("eMail")) {
+			setEmail(text.substring(6, text.length()));
+		}
+		if(text.contains("Telefon")) {
+			setTelephone(text.substring(8, text.length()));
+		}
+		if(text.contains("Telefax")) {
+			setFax(text.substring(8, text.length()));
+		}
+		if(text.contains("Strasse/Nr")) {
+			setStreet(text.substring(11, text.length()));
+		}
+		if(text.contains("PLZ/Ort")) {
+		    // Zip Code
+			Pattern r = Pattern.compile("[0-9]{5}");
+		    Matcher m = r.matcher(text);
+		    
+		    if (m.find()) {
+		    	setZip_code(m.group(0));
+		    }else {
+		        System.out.println("NO MATCH");
+		    }
+		    
+		    // City
+		    r = Pattern.compile("[0-9 ]+ [A-Za-z÷ƒ‹ˆ‰¸ﬂ -]+");
+		    m = r.matcher(text);
+		    
+		    if (m.find()) {
+		    	setCity(m.group(0).substring(6, m.group(0).length()));
+		    }else {
+		        System.out.println("NO MATCH");
+		    }
+		}
+		if(text.contains("IBAN")) {
+			System.out.println("NO MATCH");
+		}
+		if(text.contains("BIC")) {
+			System.out.println("NO MATCH");
+		}
+		if(text.contains("Legal Form")) {
+		}
+		if(text.contains("Steuerstatus")) {
 		}
 	}
 }

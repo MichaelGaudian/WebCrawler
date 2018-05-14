@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ExcelWriter {
 
-    private static final String FILE_NAME = "C:\\Workspace\\WebCrawler\\myJSoup\\Spendenorganisationen.xlsx";
+    private static final String FILE_NAME = "C:\\GitRepository\\WebCrawler\\myJSoup\\Spendenorganisationen.xlsx";
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     private int rowNum;
